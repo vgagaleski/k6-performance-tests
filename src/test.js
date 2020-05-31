@@ -5,12 +5,12 @@ import { Rate } from 'k6/metrics';
 let errorRate = new Rate('Error rate');
 
 export let options = {
-  duration: '1m',
-  vus: 50,
+  duration: '5s',
+  vus: 2,
 };
 
 export function setup() {
-  console.log(`Running test on: ${requestVariables.baseUrl}`);
+  console.log(`Running test on: ${__ENV.baseUrl}`);
 
   const requestVariables = {
     baseUrl: __ENV.baseUrl,
