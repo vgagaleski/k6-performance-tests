@@ -29,9 +29,19 @@ jobs:
             7z.exe e k6.zip
         shell: bash
 
+      # Install npm packages
+      - name: Install npm packages
+        run: npm install
+        shell: bash
+
+      # Bundle packages
+      - name: Bundle
+        run: npm run bundle
+        shell: bash
+
       # Run k6 tests
       - name: Run k6 tests
         env:
           BASE_URL: https://jsonplaceholder.typicode.com/posts
-        run: ./k6.exe run src/test.js
+        run: ./k6.exe run dist/test.bundle.js
         shell: bash
