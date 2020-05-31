@@ -10,10 +10,10 @@ export let options = {
 };
 
 export function setup() {
-  console.log(`Running test on: ${__ENV.BASE_URL}`);
+  console.log(`Running test on: https://jsonplaceholder.typicode.com/posts `);
 
   const requestVariables = {
-    baseUrl: __ENV.BASE_URL,
+    baseUrl: `https://jsonplaceholder.typicode.com/posts`,
   };
 
   return requestVariables;
