@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Performance tests
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '*/5 * * * *'
+      
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  k6_local_test:
+    name: k6 local test run on windows
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Run a one-line script
+      run: echo Hello, world!
+
+    # Runs a set of commands using the runners shell
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+    
+    # Download and install k6
+    - name: Download and extract k6 release binaries
+      run: |
+        curl -L https://github.com/loadimpact/k6/releases/download/v0.26.2/k6-v0.26.2-win32.zip -o k6.zip
+          7z.exe e k6.zip
+        shell: bash
+        
+    # Run k6 tests
+    - name: Run k6 tests
+      run: ./k6.exe run src/test.js
+      shell: bash
