@@ -41,5 +41,7 @@ jobs:
         
     # Run k6 tests
     - name: Run k6 tests
+      env:
+        baseUrl: https://jsonplaceholder.typicode.com/posts
       run: ./k6.exe run src/test.js
       shell: bash
