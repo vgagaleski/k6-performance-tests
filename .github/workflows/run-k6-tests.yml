@@ -31,9 +31,10 @@ jobs:
 
       # Download and install k6 (Ubuntu)
       - name: Download and install deb and rpm packages
-      - run: echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-      - run: sudo apt-get update
-      - run: sudo apt-get install k6
+      - run: |
+          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt-get install k6
 
       # Setup nodejs
       - name: Use Node.js
@@ -44,13 +45,13 @@ jobs:
       # Install npm packages
       - name: Install npm packages
         run: npm install
-        # shell: bash
 
+      # shell: bash
       # Bundle packages
       - name: Bundle
         run: npm run bundle
-        # shell: bash
 
+      # shell: bash
       # Run k6 tests
       - name: Run k6 tests
         env:
