@@ -7,14 +7,14 @@ name: Performance tests
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   k6_local_test:
     name: k6 local test run on windows
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -22,26 +22,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Download and install k6
-      - name: Download and extract k6 release binaries
-        run: |
-          curl -L https://github.com/loadimpact/k6/releases/download/v0.26.2/k6-v0.26.2-win32.zip -o k6.zip
-            7z.exe e k6.zip
-        shell: bash
+      # Download and install k6 (Windows)
+      # - name: Download and extract k6 release binaries
+      #   run: |
+      #     curl -L https://github.com/loadimpact/k6/releases/download/v0.26.2/k6-v0.26.2-win32.zip -o k6.zip
+      #       7z.exe e k6.zip
+      #   shell: bash
+
+      # Download and install k6 (Ubuntu)
+      - name: Download and install deb and rpm packages
+        run: echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+        run: sudo apt-get update
+        run: sudo apt-get install k6
+
+      # Setup nodejs
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
 
       # Install npm packages
       - name: Install npm packages
         run: npm install
-        shell: bash
+        # shell: bash
 
       # Bundle packages
       - name: Bundle
         run: npm run bundle
-        shell: bash
+        # shell: bash
 
       # Run k6 tests
       - name: Run k6 tests
         env:
           BASE_URL: https://jsonplaceholder.typicode.com/posts
-        run: ./k6.exe run dist/test.bundle.js
-        shell: bash
+        # run: ./k6.exe run dist/test.bundle.js
+        run: k6 run dist/test.bundle.js
+        # shell: bash
