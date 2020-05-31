@@ -31,10 +31,11 @@ jobs:
 
       # Download and install k6 (Ubuntu)
       - name: Download and install deb and rpm packages
-        run: |
-          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-          sudo apt-get update
+        run:
           sudo apt-get install k6
+          # echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+          # sudo apt-get update
+
 
       # Setup nodejs
       - name: Use Node.js
