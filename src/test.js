@@ -10,10 +10,10 @@ export let options = {
 };
 
 export function setup() {
-  console.log(`Running test on: ${__ENV.baseUrl}`);
+  console.log(`Running test on: ${__ENV.BASE_URL}`);
 
   const requestVariables = {
-    baseUrl: __ENV.baseUrl,
+    baseUrl: __ENV.BASE_URL,
   };
 
   return requestVariables;
